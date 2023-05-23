@@ -15,12 +15,15 @@ import dk.sdu.mmmi.perib21.common.data.GameData;
 public class LifePart implements EntityPart {
 
     private int life;
-    private boolean isHit = false;
+    private boolean entityHit = false;
+    private boolean terminated = false;
     private float expiration;
 
     public LifePart(int life, float expiration) {
         this.life = life;
         this.expiration = expiration;
+        this.entityHit = false;
+        this.terminated = false;
     }
 
     public int getLife() {
@@ -31,13 +34,6 @@ public class LifePart implements EntityPart {
         this.life = life;
     }
 
-    public boolean isIsHit() {
-        return isHit;
-    }
-
-    public void setIsHit(boolean isHit) {
-        this.isHit = isHit;
-    }
 
     public float getExpiration() {
         return expiration;
@@ -50,9 +46,30 @@ public class LifePart implements EntityPart {
     public void reduceExpiration(float delta){
         this.expiration -= delta;
     }
-    
+
+    public boolean isEntityHit() {
+        return entityHit;
+    }
+    public void setIsHit(boolean isHit) {
+        this.entityHit = isHit;
+    }
+
+    public boolean isTerminated() {
+        return terminated;
+    }
+
+    public void setTerminated(boolean terminated) {
+        this.terminated = terminated;
+    }
+
     @Override
     public void process(GameData gameData, Entity entity) {
-        
+        if (this.entityHit) {
+            this.life -= 1;
+            this.entityHit = false;
+        }
+        if (this.life <= 0) {
+            this.terminated = true;
+        }
     }
 }

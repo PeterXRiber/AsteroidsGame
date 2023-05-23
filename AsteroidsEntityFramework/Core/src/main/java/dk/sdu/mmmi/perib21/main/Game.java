@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dk.sdu.mmmi.perib21.asteroidsystem.AsteroidControlSystem;
+import dk.sdu.mmmi.perib21.asteroidsystem.AsteroidPlugin;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.perib21.common.services.IGamePluginService;
+import dk.sdu.mmmi.perib21.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.perib21.enemysystem.EnemyControlSystem;
 import dk.sdu.mmmi.perib21.managers.GameInputProcessor;
 import dk.sdu.mmmi.perib21.playersystem.PlayerControlSystem;
@@ -29,9 +32,14 @@ public class Game
     private List<IEntityProcessingService> entityProcessors = new ArrayList<>();
     private IEntityProcessingService playerProcess = new PlayerControlSystem();
     private IEntityProcessingService enemyProcess = new EnemyControlSystem();
+    private IEntityProcessingService asteroidProcess = new AsteroidControlSystem();
+
     private List<IGamePluginService> entityPlugins = new ArrayList<>();
     private IGamePluginService playerPlugin = new PlayerPlugin();
     private IGamePluginService enemyPlugin = new EnemyPlugin();
+    private IGamePluginService asteroidPlugin = new AsteroidPlugin();
+
+    private List<IPostEntityProcessingService> entityPostProcessorServiceList = new ArrayList<>();
 
     private World world = new World();
 
@@ -53,8 +61,17 @@ public class Game
 
         entityPlugins.add(playerPlugin);
         entityProcessors.add(playerProcess);
+
         entityPlugins.add(enemyPlugin);
         entityProcessors.add(enemyProcess);
+
+        entityPlugins.add(asteroidPlugin);
+        entityProcessors.add(asteroidProcess);
+
+
+       // entityPostProcessorServiceList.add(collisionProcess);
+
+
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : entityPlugins) {
             iGamePlugin.start(gameData, world);
@@ -84,6 +101,12 @@ public class Game
         for (IEntityProcessingService entityProcessorService : entityProcessors) {
             entityProcessorService.process(gameData, world);
         }
+        /*
+        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
+            postEntityProcessorService.process(gameData, world);
+        }
+
+         */
     }
 
     private void draw() {

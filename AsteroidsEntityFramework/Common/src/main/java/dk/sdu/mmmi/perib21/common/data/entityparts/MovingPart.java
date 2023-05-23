@@ -22,13 +22,20 @@ public class MovingPart
     private float dx, dy;
     private float deceleration, acceleration;
     private float maxSpeed, rotationSpeed;
+    private float startSpeed;
     private boolean left, right, up;
 
-    public MovingPart(float deceleration, float acceleration, float maxSpeed, float rotationSpeed) {
+    private boolean startSpeedSet;
+
+
+    public MovingPart(float deceleration, float acceleration, float maxSpeed, float rotationSpeed, float startSpeed) {
         this.deceleration = deceleration;
         this.acceleration = acceleration;
         this.maxSpeed = maxSpeed;
         this.rotationSpeed = rotationSpeed;
+        this.startSpeed = startSpeed;
+        this.startSpeedSet = !(startSpeed > 0);
+
     }
 
     public void setDeceleration(float deceleration) {
@@ -59,6 +66,17 @@ public class MovingPart
         this.up = up;
     }
 
+    public float getStartSpeed() {
+        return startSpeed;
+    }
+    public float getSpeed() {
+        return (float) sqrt(dx*dx + dy*dy);
+    }
+
+    public void setStartSpeed(float startSpeed) {
+        this.startSpeed = startSpeed;
+    }
+
     @Override
     public void process(GameData gameData, Entity entity) {
         PositionPart positionPart = entity.getPart(PositionPart.class);
@@ -66,6 +84,12 @@ public class MovingPart
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
         float dt = gameData.getDelta();
+
+        if (!this.startSpeedSet) {
+            dx = (float) (Math.cos(radians) * this.startSpeed);
+            dy = (float) (Math.sin(radians) * this.startSpeed);
+            this.startSpeedSet = true;
+        }
 
         // turning
         if (left) {
