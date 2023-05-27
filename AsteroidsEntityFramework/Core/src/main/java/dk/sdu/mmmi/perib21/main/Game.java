@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dk.sdu.mmmi.perib21.asteroidsystem.AsteroidControlSystem;
 import dk.sdu.mmmi.perib21.asteroidsystem.AsteroidPlugin;
+import dk.sdu.mmmi.perib21.collisionsystem.CollisionSystem;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
@@ -22,30 +23,25 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game
-        implements ApplicationListener {
-
+public class Game implements ApplicationListener {
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
-
     private final GameData gameData = new GameData();
     private List<IEntityProcessingService> entityProcessors = new ArrayList<>();
     private IEntityProcessingService playerProcess = new PlayerControlSystem();
     private IEntityProcessingService enemyProcess = new EnemyControlSystem();
     private IEntityProcessingService asteroidProcess = new AsteroidControlSystem();
-
     private List<IGamePluginService> entityPlugins = new ArrayList<>();
     private IGamePluginService playerPlugin = new PlayerPlugin();
     private IGamePluginService enemyPlugin = new EnemyPlugin();
     private IGamePluginService asteroidPlugin = new AsteroidPlugin();
-
     private List<IPostEntityProcessingService> entityPostProcessorServiceList = new ArrayList<>();
+    private IPostEntityProcessingService collisionProcess = new CollisionSystem();
 
     private World world = new World();
 
     @Override
     public void create() {
-
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -55,8 +51,7 @@ public class Game
 
         sr = new ShapeRenderer();
 
-        Gdx.input.setInputProcessor(
-                new GameInputProcessor(gameData)
+        Gdx.input.setInputProcessor(new GameInputProcessor(gameData)
         );
 
         entityPlugins.add(playerPlugin);
@@ -68,8 +63,7 @@ public class Game
         entityPlugins.add(asteroidPlugin);
         entityProcessors.add(asteroidProcess);
 
-
-       // entityPostProcessorServiceList.add(collisionProcess);
+       entityPostProcessorServiceList.add(collisionProcess);
 
 
         // Lookup all Game Plugins using ServiceLoader
@@ -101,12 +95,12 @@ public class Game
         for (IEntityProcessingService entityProcessorService : entityProcessors) {
             entityProcessorService.process(gameData, world);
         }
-        /*
-        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
-            postEntityProcessorService.process(gameData, world);
+
+        for (IPostEntityProcessingService entityPostProcessingService : entityPostProcessorServiceList) {
+            entityPostProcessingService.process(gameData, world);
         }
 
-         */
+
     }
 
     private void draw() {

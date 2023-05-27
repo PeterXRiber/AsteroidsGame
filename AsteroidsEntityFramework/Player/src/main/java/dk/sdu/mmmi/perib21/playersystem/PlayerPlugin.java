@@ -3,6 +3,7 @@ package dk.sdu.mmmi.perib21.playersystem;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
+import dk.sdu.mmmi.perib21.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.perib21.common.services.IGamePluginService;
@@ -36,6 +37,7 @@ public class PlayerPlugin implements IGamePluginService {
         Entity playerShip = new Player();
         playerShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed,0));
         playerShip.add(new PositionPart(x, y, radians));
+        playerShip.add(new LifePart(1,0));
 
         return playerShip;
     }

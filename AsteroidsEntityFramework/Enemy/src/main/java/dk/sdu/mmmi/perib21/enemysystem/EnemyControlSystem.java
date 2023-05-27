@@ -25,7 +25,11 @@ public class EnemyControlSystem implements IEntityProcessingService {
 
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
-            //lifePart.process(gameData,enemy);
+            lifePart.process(gameData,enemy);
+
+            if (lifePart.isTerminated()) {
+                world.removeEntity(enemy);
+            }
 
             updateShape(enemy);
         }
