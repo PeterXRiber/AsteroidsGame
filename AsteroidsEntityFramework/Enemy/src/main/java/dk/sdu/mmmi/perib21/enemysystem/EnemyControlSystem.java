@@ -1,7 +1,6 @@
 package dk.sdu.mmmi.perib21.enemysystem;
 
 import com.badlogic.gdx.math.MathUtils;
-import dk.sdu.mmmi.perib21.bulletsystem.BulletPlugin;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;

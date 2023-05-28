@@ -61,9 +61,10 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 BulletPlugin bulletPlugin = new BulletPlugin();
                 world.addEntity(bulletPlugin.create(player,gameData));
             }
-
  */
-
+            if (lifePart.isTerminated()) {
+                world.removeEntity(player);
+            }
 
             updateShape(player);
         }
