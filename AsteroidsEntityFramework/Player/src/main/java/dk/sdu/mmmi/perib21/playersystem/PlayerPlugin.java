@@ -24,7 +24,12 @@ public class PlayerPlugin implements IGamePluginService {
         world.addEntity(player);
 
     }
-
+    /**
+     * Creates the player ship
+     * Pre-condition: The game is running. A new player ship will be created given the defined attributes.
+     * Post-condition: A player ship has been created and added to the game.
+     * @param gameData
+     */
     private Entity createPlayerShip(GameData gameData) {
 
         float deacceleration = 10;

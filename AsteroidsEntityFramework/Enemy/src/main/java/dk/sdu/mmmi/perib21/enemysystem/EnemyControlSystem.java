@@ -14,7 +14,13 @@ import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
 public class EnemyControlSystem implements IEntityProcessingService {
 
     private float time = 0f;
-
+    /**
+     * This overridden method adds the components entities to the world and adds gamedata.
+     * It adds the parts of the relevant entity.
+     * It might perform additional action depending on the nature of the components entities.
+     * @param gameData
+     * @param world
+     */
     @Override
     public void process(GameData gameData, World world) {
 
@@ -59,10 +65,19 @@ public class EnemyControlSystem implements IEntityProcessingService {
         }
     }
 
-    private void updateShape(Entity enemy) {
-        float[] shapex = enemy.getShapeX();
-        float[] shapey = enemy.getShapeY();
-        PositionPart positionPart = enemy.getPart(PositionPart.class);
+    /**
+     * Updates the shape of an entity. If an entity changes position and moves, the shape will be updated
+     * to reflect that change.
+     * Pre-condition: An amount of time have happened in game since the entity has been called.
+     * Post-condition: The entity's shape has been updated to the new location
+     *
+     * @param entity
+     */
+
+    private void updateShape(Entity entity) {
+        float[] shapex = entity.getShapeX();
+        float[] shapey = entity.getShapeY();
+        PositionPart positionPart = entity.getPart(PositionPart.class);
         float x = positionPart.getX();
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
@@ -79,8 +94,8 @@ public class EnemyControlSystem implements IEntityProcessingService {
         shapex[3] = (float) (x + Math.cos(radians + 4 * 3.1415f / 5) * 8);
         shapey[3] = (float) (y + Math.sin(radians + 4 * 3.1415f / 5) * 8);
 
-        enemy.setShapeX(shapex);
-        enemy.setShapeY(shapey);
+        entity.setShapeX(shapex);
+        entity.setShapeY(shapey);
 
     }
 

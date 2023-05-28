@@ -21,6 +21,13 @@ public class BulletPlugin implements IGamePluginService, IBulletPluginService {
         this.gunner = gunner;
     }
 
+    /**
+     * Creates a bullet
+     * Pre-condition: The game is running. A new bullet will be created given the defined attributes and the
+     * entity that wants to shoot.
+     * Post-condition: A bullet has been created and added to the game. The bullet is shot by an entity.
+     * @param gameData
+     */
     private Entity createBullet(GameData gameData) {
 
         PositionPart gunnerPosition = this.gunner.getPart(PositionPart.class);

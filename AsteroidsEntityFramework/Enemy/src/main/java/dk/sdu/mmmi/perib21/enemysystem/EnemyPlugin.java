@@ -28,7 +28,12 @@ public class EnemyPlugin implements IGamePluginService {
 
 
     }
-
+    /**
+     * Creates an enemy
+     * Pre-condition: The game is running. A new enemy will be created given the defined attributes.
+     * Post-condition: An enemy has been created and added to the game.
+     * @param gameData
+     */
     private Entity createEnemyShip(GameData gameData) {
 
         float deacceleration = 10;

@@ -9,9 +9,20 @@ import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
 
 /**
- * Asteroid control system, that control the movement and behavior of all asteroids.
+ * This is the asteroid control system.
+ * This class controls the movement and the normal actions of the asteroids in the game.
+ * It contains the logic for processing, splitting and updating the shape of an asteroid.
  */
 public class AsteroidControlSystem implements IEntityProcessingService {
+
+
+    /**
+     * This overridden method adds the components entities to the world and adds gamedata.
+     * It adds the parts of the relevant entity.
+     * It might perform additional action depending on the nature of the components entities.
+     * @param gameData
+     * @param world
+     */
     @Override
     public void process(GameData gameData, World world) {
         for (Entity asteroid : world.getEntities(Asteroid.class)) {
@@ -34,14 +45,15 @@ public class AsteroidControlSystem implements IEntityProcessingService {
     }
 
     /**
-     * Handle asteroid splitting, by checking if it is needing, and doing if it is.
-     * <br>
-     * Pre-condition: Asteroid is present in the game board, and that the asteroid has life part. <br />
-     * post-condition: If the asteroid is not in splitting stage, nothing is done, else splittet asteroids are created.
-     *
-     * @param gameData Data for the game
-     * @param world World of the game
-     * @param asteroid The asteroid that needs to be checked and handled
+     * --handleAsteroidSpltting--
+     * This method handles the process of splitting asteroids based on an asteroids amount of life.
+     * Pre-condition: A given asteroid is in the game. The Asteroid has an amount of life.
+     * Post-condition: If the asteroid is not terminated by being hit, the method will split the asteroid
+     * and smaller asteroids will be created.
+     * If the asteroid is evaluated as terminated, the method will not perform a split.
+     * @param gameData
+     * @param world
+     * @param asteroid
      */
     private void handleAsteroidSplitting(GameData gameData, World world, Entity asteroid) {
         // Get parts
@@ -60,12 +72,12 @@ public class AsteroidControlSystem implements IEntityProcessingService {
     }
 
     /**
-     * Update the shape of entity
-     * <br />
-     * Pre-condition: An entity that can be drawn, and a game tick has passed since last call for entity <br />
-     * Post-condition: Updated shape location for the entity
+     * Updates the shape of an entity. If an entity changes position and moves, the shape will be updated
+     * to reflect that change.
+     * Pre-condition: An amount of time have happened in game since the entity has been called.
+     * Post-condition: The entity's shape has been updated to the new location
      *
-     * @param entity Entity to update shape of
+     * @param entity
      */
     private void updateShape(Entity entity) {
         float[] shapeX = entity.getShapeX();

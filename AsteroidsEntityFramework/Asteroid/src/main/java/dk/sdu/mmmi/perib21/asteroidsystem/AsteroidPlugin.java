@@ -36,21 +36,17 @@ public class AsteroidPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        for (int i = 0; i < MathUtils.random(5, 20); i++) {
+        for (int i = 0; i < MathUtils.random(5, 10); i++) {
             asteroid = createInitialAsteroid(gameData);
             world.addEntity(asteroid);
         }
     }
 
     /**
-     * Create initial asteroid
-     * <br />
-     * Pre-condition: New asteroid has to be created with default data. Game is running <br />
-     * Post-condition: Asteroid entity, that is set with initial default data.
-     *
-     * @param gameData Data for the
-     *
-     * @return Asteroid entity, to be added to the world
+     * Creates an asteroid
+     * Pre-condition: The game is running. A new asteroid will be created given the defined attributes.
+     * Post-condition: An asteroid has been created and added to the game.
+     * @param gameData
      */
     public Entity createInitialAsteroid(GameData gameData) {
         float x = MathUtils.random(gameData.getDisplayWidth());
@@ -68,14 +64,15 @@ public class AsteroidPlugin implements IGamePluginService {
     }
 
     /**
-     * Create splittet asteroid, that bases some data points on previous asteroids
-     * <br />
-     * Pre-condition: Asteroid that is started and has to be splittet, and game is running <br />
-     * Post-condition: Splittet asteroid added to the game world
+     * An asteroid will be splittet based on the amount of life the asteroid has remaining.
      *
-     * @param gameData Data for the game
-     * @param world World of the game
-     * @param asteroid Asteroid to be splittet
+     * Pre-condition: The game is running. An asteroid have been taking damage and will be changes to another kind
+     * asteroid.
+     * Post-condition: The former asteroid have been removed from the game.
+     * The newly created and splittet asteroid has been added to the game world
+     * @param gameData
+     * @param world
+     * @param asteroid
      */
     protected void createSplittetAsteroid(GameData gameData, World world, Entity asteroid) {
         world.removeEntity(asteroid);
@@ -113,10 +110,10 @@ public class AsteroidPlugin implements IGamePluginService {
     }
 
     /**
-     * Build parts for asteroid
-     * <br />
-     * Pre-condition: Asteroid that has not yet had parts added, or been build, and has to have parts added <br />
-     * Post-condition: Build asteroid with needed parts added
+     * Builds the pieces of the asteroids
+     *
+     * Pre-condition: Asteroid to be initialized and is missing its relevant pieces.
+     * Post-condition: The pieces has been added and the asteroid is ready to be created.
      *
      * @param gameData Data for the game
      * @param asteroid World of the game
@@ -137,12 +134,10 @@ public class AsteroidPlugin implements IGamePluginService {
     }
 
     /**
-     * Set radius of asteroid, based on its life
-     * <br />
-     * Pre-condition: Asteroid entity<br />
-     * Post-condition: Asteroid entity with correct radius
-     *
-     * @param asteroid Asteroid entity to have its radius updated
+     * The life of the asteroid is evaluated and is used to set the radius
+     * Pre-condition: An asteroid that has just been taken damage
+     * Post-condition: Asteroid with the radius that matches the life of the asteroid
+     * @param asteroid
      */
     private void setAsteroidRadius(Entity asteroid) {
         float radius = 0;

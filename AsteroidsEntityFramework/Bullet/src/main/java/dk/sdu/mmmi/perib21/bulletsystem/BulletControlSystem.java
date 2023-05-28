@@ -9,7 +9,13 @@ import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
 
 public class BulletControlSystem implements IEntityProcessingService {
-
+    /**
+     * This overridden method adds the components entities to the world and adds gamedata.
+     * It adds the parts of the relevant entity.
+     * It might perform additional action depending on the nature of the components entities.
+     * @param gameData
+     * @param world
+     */
     @Override
     public void process(GameData gameData, World world) {
         for (Entity bullet : world.getEntities(Bullet.class)) {
@@ -33,6 +39,15 @@ public class BulletControlSystem implements IEntityProcessingService {
             updateShape(bullet);
         }
     }
+
+    /**
+     * Updates the shape of an entity. If an entity changes position and moves, the shape will be updated
+     * to reflect that change.
+     * Pre-condition: An amount of time have happened in game since the entity has been called.
+     * Post-condition: The entity's shape has been updated to the new location
+     *
+     * @param entity
+     */
 
     private void updateShape(Entity entity) {
         float[] shapeX = entity.getShapeX();
