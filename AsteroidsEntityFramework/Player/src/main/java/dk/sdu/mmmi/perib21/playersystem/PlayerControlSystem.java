@@ -1,25 +1,13 @@
 package dk.sdu.mmmi.perib21.playersystem;
-
-import com.badlogic.gdx.math.MathUtils;
-import dk.sdu.mmmi.perib21.bulletsystem.BulletControlSystem;
 import dk.sdu.mmmi.perib21.bulletsystem.BulletPlugin;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
-
-import dk.sdu.mmmi.perib21.common.data.GameKeys;
 import dk.sdu.mmmi.perib21.common.data.World;
 import dk.sdu.mmmi.perib21.common.data.entityparts.GunnerPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
-import dk.sdu.mmmi.perib21.common.services.IBulletPluginService;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.perib21.common.services.IPostEntityProcessingService;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import static dk.sdu.mmmi.perib21.common.data.GameKeys.*;
 
 /**
@@ -53,6 +41,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             }
             // Manage the gunner part
             gunnerPart.setWeaponActive(gameData.getKeys().isDown(SPACE));
+
 
             if (gunnerPart.getWeaponActive()==true) {
                 BulletPlugin bulletPlugin = new BulletPlugin();
