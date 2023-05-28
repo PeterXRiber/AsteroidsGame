@@ -3,6 +3,7 @@ package dk.sdu.mmmi.perib21.enemysystem;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
+import dk.sdu.mmmi.perib21.common.data.entityparts.GunnerPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
@@ -41,6 +42,7 @@ public class EnemyPlugin implements IGamePluginService {
         enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed, 50));
         enemyShip.add(new PositionPart(x, y, radians));
         enemyShip.add(new LifePart(1,0));
+        enemyShip.add(new GunnerPart(1.5f));
 
         return enemyShip;
     }

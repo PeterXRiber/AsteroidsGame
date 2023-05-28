@@ -5,11 +5,15 @@ import dk.sdu.mmmi.perib21.common.data.GameData;
 import static dk.sdu.mmmi.perib21.common.data.GameKeys.LEFT;
 import static dk.sdu.mmmi.perib21.common.data.GameKeys.RIGHT;
 import static dk.sdu.mmmi.perib21.common.data.GameKeys.UP;
+
+import dk.sdu.mmmi.perib21.common.data.GameKeys;
 import dk.sdu.mmmi.perib21.common.data.World;
+import dk.sdu.mmmi.perib21.common.data.entityparts.GunnerPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.perib21.common.services.IPostEntityProcessingService;
 
 /**
  *
@@ -24,6 +28,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             PositionPart positionPart = player.getPart(PositionPart.class);
             MovingPart movingPart = player.getPart(MovingPart.class);
             LifePart lifePart = player.getPart(LifePart.class);
+            GunnerPart gunnerPart = player.getPart(GunnerPart.class);
 
             movingPart.setLeft(gameData.getKeys().isDown(LEFT));
             movingPart.setRight(gameData.getKeys().isDown(RIGHT));
@@ -33,9 +38,16 @@ public class PlayerControlSystem implements IEntityProcessingService {
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
             lifePart.process(gameData,player);
+            gunnerPart.process(gameData,player);
 
             if (lifePart.isTerminated()) {
                 world.removeEntity(player);
+            }
+
+            gunnerPart.setWeaponActive(gameData.getKeys().isDown(GameKeys.ENTER));
+            gunnerPart.getWeaponActive();
+            if (gunnerPart.getWeaponActive()==true) {
+              
             }
 
             updateShape(player);
