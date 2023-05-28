@@ -1,8 +1,10 @@
 package dk.sdu.mmmi.perib21.enemysystem;
 
+import com.badlogic.gdx.math.MathUtils;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
+import dk.sdu.mmmi.perib21.common.data.entityparts.GunnerPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
@@ -17,6 +19,7 @@ public class EnemyControlSystem implements IEntityProcessingService {
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MovingPart movingPart = enemy.getPart(MovingPart.class);
             LifePart lifePart = enemy.getPart(LifePart.class);
+            GunnerPart gunnerPart = enemy.getPart(GunnerPart.class);
 
             movingPart.setLeft(false);
             movingPart.setRight(true);
@@ -26,6 +29,10 @@ public class EnemyControlSystem implements IEntityProcessingService {
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
             lifePart.process(gameData,enemy);
+            gunnerPart.process(gameData,enemy);
+
+            gunnerPart.setWeaponActive(MathUtils.random(0f,1f) > 0.99f);
+
 
             if (lifePart.isTerminated()) {
                 world.removeEntity(enemy);

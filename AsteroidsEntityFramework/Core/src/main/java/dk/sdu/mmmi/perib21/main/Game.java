@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dk.sdu.mmmi.perib21.asteroidsystem.AsteroidControlSystem;
 import dk.sdu.mmmi.perib21.asteroidsystem.AsteroidPlugin;
+import dk.sdu.mmmi.perib21.bulletsystem.BulletControlSystem;
 import dk.sdu.mmmi.perib21.collisionsystem.CollisionSystem;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
+import dk.sdu.mmmi.perib21.common.services.IBulletPluginService;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.perib21.common.services.IGamePluginService;
 import dk.sdu.mmmi.perib21.common.services.IPostEntityProcessingService;
@@ -21,6 +23,7 @@ import dk.sdu.mmmi.perib21.enemysystem.EnemyPlugin;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Game implements ApplicationListener {
@@ -28,15 +31,20 @@ public class Game implements ApplicationListener {
     private ShapeRenderer sr;
     private final GameData gameData = new GameData();
     private List<IEntityProcessingService> entityProcessors = new ArrayList<>();
+    private List<IPostEntityProcessingService> entityPostProcessorServiceList = new ArrayList<>();
+    private List<IGamePluginService> entityPlugins = new ArrayList<>();
     private IEntityProcessingService playerProcess = new PlayerControlSystem();
     private IEntityProcessingService enemyProcess = new EnemyControlSystem();
     private IEntityProcessingService asteroidProcess = new AsteroidControlSystem();
-    private List<IGamePluginService> entityPlugins = new ArrayList<>();
     private IGamePluginService playerPlugin = new PlayerPlugin();
     private IGamePluginService enemyPlugin = new EnemyPlugin();
     private IGamePluginService asteroidPlugin = new AsteroidPlugin();
-    private List<IPostEntityProcessingService> entityPostProcessorServiceList = new ArrayList<>();
     private IPostEntityProcessingService collisionProcess = new CollisionSystem();
+
+    IEntityProcessingService bulletProcess = new BulletControlSystem();
+
+
+
 
     private World world = new World();
 
@@ -62,6 +70,8 @@ public class Game implements ApplicationListener {
 
         entityPlugins.add(asteroidPlugin);
         entityProcessors.add(asteroidProcess);
+
+        entityProcessors.add(bulletProcess);
 
        entityPostProcessorServiceList.add(collisionProcess);
 
@@ -140,4 +150,11 @@ public class Game implements ApplicationListener {
     @Override
     public void dispose() {
     }
+/*
+    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
+        return SPILocator.locateAll(IPostEntityProcessingService.class);
+    }
+
+
+ */
 }

@@ -1,10 +1,9 @@
 package dk.sdu.mmmi.perib21.playersystem;
 
+import dk.sdu.mmmi.perib21.bulletsystem.BulletControlSystem;
+import dk.sdu.mmmi.perib21.bulletsystem.BulletPlugin;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
-import static dk.sdu.mmmi.perib21.common.data.GameKeys.LEFT;
-import static dk.sdu.mmmi.perib21.common.data.GameKeys.RIGHT;
-import static dk.sdu.mmmi.perib21.common.data.GameKeys.UP;
 
 import dk.sdu.mmmi.perib21.common.data.GameKeys;
 import dk.sdu.mmmi.perib21.common.data.World;
@@ -12,8 +11,15 @@ import dk.sdu.mmmi.perib21.common.data.entityparts.GunnerPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
+import dk.sdu.mmmi.perib21.common.services.IBulletPluginService;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.perib21.common.services.IPostEntityProcessingService;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static dk.sdu.mmmi.perib21.common.data.GameKeys.*;
 
 /**
  *
@@ -40,15 +46,22 @@ public class PlayerControlSystem implements IEntityProcessingService {
             lifePart.process(gameData,player);
             gunnerPart.process(gameData,player);
 
+            // Manage the life part
             if (lifePart.isTerminated()) {
                 world.removeEntity(player);
             }
-
-            gunnerPart.setWeaponActive(gameData.getKeys().isDown(GameKeys.ENTER));
-            gunnerPart.getWeaponActive();
+            // Manage the gunner part
+            gunnerPart.setWeaponActive(gameData.getKeys().isDown(SPACE));
+            /*
             if (gunnerPart.getWeaponActive()==true) {
-              
+                Collection<IBulletPluginService> bulletPlugins = SPILocator.locateAll(IBulletCreator.class);
+
+                for (IBulletCreator bulletPlugin : bulletPlugins) {
+                    world.addEntity(bulletPlugin.create(player, gameData));
+                }
             }
+
+             */
 
             updateShape(player);
         }
