@@ -63,6 +63,7 @@ public class Game implements ApplicationListener {
         entityPlugins.add(playerPlugin);
         entityProcessors.add(playerProcess);
 
+
         entityPlugins.add(enemyPlugin);
         entityProcessors.add(enemyProcess);
 

@@ -1,6 +1,7 @@
 package dk.sdu.mmmi.perib21.enemysystem;
 
 import com.badlogic.gdx.math.MathUtils;
+import dk.sdu.mmmi.perib21.bulletsystem.BulletPlugin;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
@@ -31,7 +32,11 @@ public class EnemyControlSystem implements IEntityProcessingService {
             lifePart.process(gameData,enemy);
             gunnerPart.process(gameData,enemy);
 
-            gunnerPart.setWeaponActive(MathUtils.random(0f,1f) > 0.99f);
+            gunnerPart.setWeaponActive(MathUtils.random(0f,2f) > 1.5f);
+            if (gunnerPart.getWeaponActive()==true) {
+                BulletPlugin bulletPlugin = new BulletPlugin();
+                world.addEntity(bulletPlugin.create(enemy,gameData));
+            }
 
 
             if (lifePart.isTerminated()) {

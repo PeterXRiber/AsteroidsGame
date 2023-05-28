@@ -26,9 +26,9 @@ public class BulletPlugin implements IGamePluginService, IBulletPluginService {
         PositionPart gunnerPosition = this.gunner.getPart(PositionPart.class);
         MovingPart gunnerMovement = this.gunner.getPart(MovingPart.class);
 
-        float deacceleration = 0;
+        float deacceleration = 50;
         float acceleration = 0;
-        float maxSpeed = 1000;
+        float maxSpeed = 500;
         float rotationSpeed = 5;
         float radians = gunnerPosition.getRadians();
 

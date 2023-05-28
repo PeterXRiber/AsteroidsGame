@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.perib21.enemysystem;
 
+import com.badlogic.gdx.math.MathUtils;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
@@ -22,8 +23,9 @@ public class EnemyPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
         // Add enemies to the world
-        enemy = createEnemyShip(gameData);
-        world.addEntity(enemy);
+            enemy = createEnemyShip(gameData);
+            world.addEntity(enemy);
+
 
     }
 
@@ -39,10 +41,10 @@ public class EnemyPlugin implements IGamePluginService {
 
         Entity enemyShip = new Enemy();
         enemyShip.setColor(new Color(1,0,0,1));
-        enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed, 50));
+        enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed, 0));
         enemyShip.add(new PositionPart(x, y, radians));
         enemyShip.add(new LifePart(1,0));
-        enemyShip.add(new GunnerPart(1.5f));
+        enemyShip.add(new GunnerPart(1.0f));
 
         return enemyShip;
     }

@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.perib21.playersystem;
 
+import com.badlogic.gdx.math.MathUtils;
 import dk.sdu.mmmi.perib21.bulletsystem.BulletControlSystem;
 import dk.sdu.mmmi.perib21.bulletsystem.BulletPlugin;
 import dk.sdu.mmmi.perib21.common.data.Entity;
