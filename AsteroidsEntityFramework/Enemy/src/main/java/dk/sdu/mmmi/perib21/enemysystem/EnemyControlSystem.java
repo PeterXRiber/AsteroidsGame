@@ -12,8 +12,14 @@ import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
 
 public class EnemyControlSystem implements IEntityProcessingService {
+
+    private float totalTime = 0f;
+
     @Override
     public void process(GameData gameData, World world) {
+
+
+
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
 
@@ -22,9 +28,25 @@ public class EnemyControlSystem implements IEntityProcessingService {
             LifePart lifePart = enemy.getPart(LifePart.class);
             GunnerPart gunnerPart = enemy.getPart(GunnerPart.class);
 
-            movingPart.setLeft(false);
-            movingPart.setRight(true);
-            movingPart.setUp(true);
+            this.totalTime = (this.totalTime + gameData.getDelta()) % 100;
+
+            float controlRotateAmplifier = MathUtils.random(0.1f,2f);
+            float controlGeneralAmplifier = MathUtils.random(0.1f,2f);
+
+
+            movingPart.setLeft(
+                    (MathUtils.sin(totalTime * controlRotateAmplifier + MathUtils.random(0f, 2f)) *
+                            controlGeneralAmplifier) < MathUtils.random(-0.3f, -controlGeneralAmplifier)
+            );
+
+            movingPart.setRight(
+                    (MathUtils.sin(totalTime * controlRotateAmplifier + MathUtils.random(0f, 2f)) *
+                            controlGeneralAmplifier) > MathUtils.random(0.8f, controlGeneralAmplifier)
+            );
+
+            movingPart.setUp(MathUtils.random(0.01f, 1f) > MathUtils.random(0.5f, 1f))
+            ;
+
 
 
             movingPart.process(gameData, enemy);
@@ -32,7 +54,7 @@ public class EnemyControlSystem implements IEntityProcessingService {
             lifePart.process(gameData,enemy);
             gunnerPart.process(gameData,enemy);
 
-            gunnerPart.setWeaponActive(MathUtils.random(0f,2f) > 1.5f);
+            gunnerPart.setWeaponActive(MathUtils.random(0f,0.55f) > 0.49f);
             if (gunnerPart.getWeaponActive()==true) {
                 BulletPlugin bulletPlugin = new BulletPlugin();
                 world.addEntity(bulletPlugin.create(enemy,gameData));
