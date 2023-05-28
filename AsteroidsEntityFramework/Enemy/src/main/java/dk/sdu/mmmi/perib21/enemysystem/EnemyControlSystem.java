@@ -30,25 +30,20 @@ public class EnemyControlSystem implements IEntityProcessingService {
 
             this.totalTime = (this.totalTime + gameData.getDelta()) % 100;
 
-            float controlRotateAmplifier = MathUtils.random(0.1f,2f);
-            float controlGeneralAmplifier = MathUtils.random(0.1f,2f);
-
+            float controlRotateAmplifier = MathUtils.random(0.5f,2f);
+            float controlGeneralAmplifier = MathUtils.random(0.5f,2f);
 
             movingPart.setLeft(
-                    (MathUtils.sin(totalTime * controlRotateAmplifier + MathUtils.random(0f, 2f)) *
+                    (MathUtils.sin(totalTime * controlRotateAmplifier +
+                            MathUtils.random(0f, 2f)) *
                             controlGeneralAmplifier) < MathUtils.random(-0.3f, -controlGeneralAmplifier)
             );
-
             movingPart.setRight(
-                    (MathUtils.sin(totalTime * controlRotateAmplifier + MathUtils.random(0f, 2f)) *
-                            controlGeneralAmplifier) > MathUtils.random(0.8f, controlGeneralAmplifier)
-            );
+                    (MathUtils.sin(totalTime * controlRotateAmplifier +
+                            MathUtils.random(0f, 2f)) *
+                            controlGeneralAmplifier) > MathUtils.random(0.8f, controlGeneralAmplifier));
 
-            movingPart.setUp(MathUtils.random(0.01f, 1f) > MathUtils.random(0.5f, 1f))
-            ;
-
-
-
+            movingPart.setUp(MathUtils.random(0.01f, 1f) > MathUtils.random(0.5f, 1f));
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
             lifePart.process(gameData,enemy);
@@ -59,15 +54,11 @@ public class EnemyControlSystem implements IEntityProcessingService {
                 BulletPlugin bulletPlugin = new BulletPlugin();
                 world.addEntity(bulletPlugin.create(enemy,gameData));
             }
-
-
             if (lifePart.isTerminated()) {
                 world.removeEntity(enemy);
             }
-
             updateShape(enemy);
         }
-
     }
 
     private void updateShape(Entity enemy) {
