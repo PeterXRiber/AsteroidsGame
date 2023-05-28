@@ -13,12 +13,10 @@ import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
 
 public class EnemyControlSystem implements IEntityProcessingService {
 
-    private float totalTime = 0f;
+    private float time = 0f;
 
     @Override
     public void process(GameData gameData, World world) {
-
-
 
 
         for (Entity enemy : world.getEntities(Enemy.class)) {
@@ -28,18 +26,18 @@ public class EnemyControlSystem implements IEntityProcessingService {
             LifePart lifePart = enemy.getPart(LifePart.class);
             GunnerPart gunnerPart = enemy.getPart(GunnerPart.class);
 
-            this.totalTime = (this.totalTime + gameData.getDelta()) % 100;
+            this.time = (this.time + gameData.getDelta()) % 50;
 
             float controlRotateAmplifier = MathUtils.random(0.5f,2f);
             float controlGeneralAmplifier = MathUtils.random(0.5f,2f);
 
             movingPart.setLeft(
-                    (MathUtils.sin(totalTime * controlRotateAmplifier +
+                    (MathUtils.sin(time * controlRotateAmplifier +
                             MathUtils.random(0f, 2f)) *
                             controlGeneralAmplifier) < MathUtils.random(-0.3f, -controlGeneralAmplifier)
             );
             movingPart.setRight(
-                    (MathUtils.sin(totalTime * controlRotateAmplifier +
+                    (MathUtils.sin(time * controlRotateAmplifier +
                             MathUtils.random(0f, 2f)) *
                             controlGeneralAmplifier) > MathUtils.random(0.8f, controlGeneralAmplifier));
 
