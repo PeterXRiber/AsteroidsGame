@@ -30,18 +30,9 @@ public class Game implements ApplicationListener {
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
     private final GameData gameData = new GameData();
-    private List<IEntityProcessingService> entityProcessors = new ArrayList<>();
-    private List<IPostEntityProcessingService> entityPostProcessorServiceList = new ArrayList<>();
-    private List<IGamePluginService> entityPlugins = new ArrayList<>();
-    private IEntityProcessingService playerProcess = new PlayerControlSystem();
-    private IEntityProcessingService enemyProcess = new EnemyControlSystem();
-    private IEntityProcessingService asteroidProcess = new AsteroidControlSystem();
-    private IGamePluginService playerPlugin = new PlayerPlugin();
-    private IGamePluginService enemyPlugin = new EnemyPlugin();
-    private IGamePluginService asteroidPlugin = new AsteroidPlugin();
-    private IPostEntityProcessingService collisionProcess = new CollisionSystem();
-    IEntityProcessingService bulletProcess = new BulletControlSystem();
     private World world = new World();
+
+
 
     @Override
     public void create() {
@@ -57,23 +48,8 @@ public class Game implements ApplicationListener {
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData)
         );
 
-        entityPlugins.add(playerPlugin);
-        entityProcessors.add(playerProcess);
-
-
-        entityPlugins.add(enemyPlugin);
-        entityProcessors.add(enemyProcess);
-
-        entityPlugins.add(asteroidPlugin);
-        entityProcessors.add(asteroidProcess);
-
-        entityProcessors.add(bulletProcess);
-
-       entityPostProcessorServiceList.add(collisionProcess);
-
-
         // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : entityPlugins) {
+        for (IGamePluginService iGamePlugin : getPluginServices()) {
             iGamePlugin.start(gameData, world);
         }
     }

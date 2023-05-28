@@ -9,7 +9,11 @@ import dk.sdu.mmmi.perib21.common.data.entityparts.GunnerPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
+import dk.sdu.mmmi.perib21.common.services.IBulletPluginService;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.perib21.common.utilities.SPILocator;
+
+import java.util.Collection;
 
 public class EnemyControlSystem implements IEntityProcessingService {
 
@@ -48,16 +52,29 @@ public class EnemyControlSystem implements IEntityProcessingService {
                             controlGeneralAmplifier) > MathUtils.random(0.8f, controlGeneralAmplifier));
 
             movingPart.setUp(MathUtils.random(0.01f, 1f) > MathUtils.random(0.5f, 1f));
+
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
             lifePart.process(gameData,enemy);
             gunnerPart.process(gameData,enemy);
 
             gunnerPart.setWeaponActive(MathUtils.random(0f,0.55f) > 0.49f);
+
+            //New implementation
+            if (gunnerPart.getWeaponActive()==true) {
+                Collection<IBulletPluginService> bulletPlugins = SPILocator.locateAll(IBulletPluginService.class);
+                for (IBulletPluginService bulletPlugin : bulletPlugins) {
+                    world.addEntity(bulletPlugin.create(enemy, gameData));
+                }
+            }
+
+            //Old implementation
+            /*
             if (gunnerPart.getWeaponActive()==true) {
                 BulletPlugin bulletPlugin = new BulletPlugin();
                 world.addEntity(bulletPlugin.create(enemy,gameData));
             }
+             */
             if (lifePart.isTerminated()) {
                 world.removeEntity(enemy);
             }
