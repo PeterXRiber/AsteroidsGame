@@ -27,9 +27,7 @@ public class EnemyControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
 
-
         for (Entity enemy : world.getEntities(Enemy.class)) {
-
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MovingPart movingPart = enemy.getPart(MovingPart.class);
             LifePart lifePart = enemy.getPart(LifePart.class);
@@ -61,6 +59,7 @@ public class EnemyControlSystem implements IEntityProcessingService {
 
             //New implementation
             if (gunnerPart.getWeaponActive()==true) {
+
                 Collection<IBulletPluginService> bulletPlugins = SPILocator.locateAll(IBulletPluginService.class);
                 for (IBulletPluginService bulletPlugin : bulletPlugins) {
                     world.addEntity(bulletPlugin.create(enemy, gameData));

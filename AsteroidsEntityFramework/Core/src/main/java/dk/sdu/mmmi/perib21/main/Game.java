@@ -4,27 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import dk.sdu.mmmi.perib21.asteroidsystem.AsteroidControlSystem;
-import dk.sdu.mmmi.perib21.asteroidsystem.AsteroidPlugin;
-import dk.sdu.mmmi.perib21.bulletsystem.BulletControlSystem;
-import dk.sdu.mmmi.perib21.collisionsystem.CollisionSystem;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
-import dk.sdu.mmmi.perib21.common.services.IBulletPluginService;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.perib21.common.services.IGamePluginService;
 import dk.sdu.mmmi.perib21.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.perib21.common.utilities.SPILocator;
-import dk.sdu.mmmi.perib21.enemysystem.EnemyControlSystem;
 import dk.sdu.mmmi.perib21.managers.GameInputProcessor;
-import dk.sdu.mmmi.perib21.playersystem.PlayerControlSystem;
-import dk.sdu.mmmi.perib21.playersystem.PlayerPlugin;
-import dk.sdu.mmmi.perib21.enemysystem.EnemyPlugin;
-import java.util.ArrayList;
+
 
 import java.util.Collection;
-import java.util.List;
+
 
 public class Game implements ApplicationListener {
     private static OrthographicCamera cam;
@@ -60,8 +51,6 @@ public class Game implements ApplicationListener {
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
 
