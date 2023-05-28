@@ -52,16 +52,13 @@ public class PlayerControlSystem implements IEntityProcessingService {
             }
             // Manage the gunner part
             gunnerPart.setWeaponActive(gameData.getKeys().isDown(SPACE));
-            /*
-            if (gunnerPart.getWeaponActive()==true) {
-                Collection<IBulletPluginService> bulletPlugins = SPILocator.locateAll(IBulletCreator.class);
 
-                for (IBulletCreator bulletPlugin : bulletPlugins) {
-                    world.addEntity(bulletPlugin.create(player, gameData));
-                }
+            if (gunnerPart.getWeaponActive()==true) {
+                BulletPlugin bulletPlugin = new BulletPlugin();
+                world.addEntity(bulletPlugin.create(player,gameData));
             }
 
-             */
+
 
             updateShape(player);
         }

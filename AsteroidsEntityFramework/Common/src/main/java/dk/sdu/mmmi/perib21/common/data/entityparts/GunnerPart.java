@@ -14,10 +14,6 @@ public class GunnerPart implements EntityPart{
     }
 
     public void setWeaponActive(boolean weaponActive) {
-
-        this.weaponActive = true;
-        this.weaponCoolDown = this.coolDownTime;
-
         if (!weaponActive) {
             this.weaponActive = false;
             return;
@@ -27,7 +23,10 @@ public class GunnerPart implements EntityPart{
             this.weaponActive = false;
             return;
         }
-        // fejl her?
+
+        this.weaponActive = true;
+        this.weaponCoolDown = this.coolDownTime;
+
     }
 
     public boolean getWeaponActive() {

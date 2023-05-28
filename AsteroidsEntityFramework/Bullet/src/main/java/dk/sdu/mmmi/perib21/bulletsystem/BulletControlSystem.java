@@ -13,6 +13,7 @@ public class BulletControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity bullet : world.getEntities(Bullet.class)) {
+
             PositionPart positionPart = bullet.getPart(PositionPart.class);
             MovingPart movingPart = bullet.getPart(MovingPart.class);
             LifePart lifePart = bullet.getPart(LifePart.class);
@@ -22,11 +23,14 @@ public class BulletControlSystem implements IEntityProcessingService {
             lifePart.reduceExpiration(gameData.getDelta());
             lifePart.process(gameData, bullet);
 
-            updateShape(bullet);
+            movingPart.setUp(true);
+
 
             if (lifePart.getExpiration() <= 0 || lifePart.isTerminated()) {
                 world.removeEntity(bullet);
             }
+
+            updateShape(bullet);
         }
     }
 

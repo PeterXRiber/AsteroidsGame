@@ -20,10 +20,8 @@ import dk.sdu.mmmi.perib21.managers.GameInputProcessor;
 import dk.sdu.mmmi.perib21.playersystem.PlayerControlSystem;
 import dk.sdu.mmmi.perib21.playersystem.PlayerPlugin;
 import dk.sdu.mmmi.perib21.enemysystem.EnemyPlugin;
-
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.List;
 
 public class Game implements ApplicationListener {
