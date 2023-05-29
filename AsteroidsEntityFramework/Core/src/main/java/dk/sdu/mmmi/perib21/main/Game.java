@@ -10,7 +10,7 @@ import dk.sdu.mmmi.perib21.common.data.World;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.perib21.common.services.IGamePluginService;
 import dk.sdu.mmmi.perib21.common.services.IPostEntityProcessingService;
-import dk.sdu.mmmi.perib21.common.utilities.SPILocator;
+import dk.sdu.mmmi.perib21.common.SPILocator.SPILocator;
 import dk.sdu.mmmi.perib21.managers.GameInputProcessor;
 
 

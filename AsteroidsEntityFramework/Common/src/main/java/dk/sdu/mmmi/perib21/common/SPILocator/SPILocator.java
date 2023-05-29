@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.perib21.common.utilities;
+package dk.sdu.mmmi.perib21.common.SPILocator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
