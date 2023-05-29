@@ -10,7 +10,7 @@ import dk.sdu.mmmi.perib21.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.perib21.common.services.IBulletPluginService;
 import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.perib21.common.utilities.SPILocator;
+import dk.sdu.mmmi.perib21.common.SPILocater.SPILocator;
 
 import java.util.Collection;
 
