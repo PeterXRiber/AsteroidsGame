@@ -61,8 +61,8 @@ public class BulletPlugin implements IGamePluginService, IBulletPluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        bullet = createBullet(gameData);
-        world.addEntity(bullet);
+      //  bullet = createBullet(gameData);
+      //  world.addEntity(bullet);
     }
 
     @Override
