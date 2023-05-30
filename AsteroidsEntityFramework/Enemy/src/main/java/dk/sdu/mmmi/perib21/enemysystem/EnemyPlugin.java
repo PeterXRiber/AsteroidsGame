@@ -8,8 +8,6 @@ import dk.sdu.mmmi.perib21.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.perib21.common.services.IGamePluginService;
 
-import java.awt.*;
-
 public class EnemyPlugin implements IGamePluginService {
 
     private Entity enemy;

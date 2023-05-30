@@ -7,15 +7,13 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		LwjglApplicationConfiguration cfg =
-			new LwjglApplicationConfiguration();
-		cfg.title = "Asteroids";
-		cfg.width = 1500;
-		cfg.height = 1500;
-		cfg.useGL30 = false;
-		cfg.resizable = false;
+		Lwjgl3ApplicationConfiguration cfg =
+			new Lwjgl3ApplicationConfiguration();
+		cfg.setTitle("Asteroids");
+		cfg.setWindowedMode(1500,1500);
+		cfg.setResizable(true);
 		
-		new LwjglApplication(new Game(), cfg);
+		new Lwjgl3Application(new Game(), cfg);
 		
 	}
 	
