@@ -1,6 +1,6 @@
 package dk.sdu.mmmi.perib21.enemysystem;
 
-import com.badlogic.gdx.math.MathUtils;
+import java.util.Random;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
@@ -33,29 +33,28 @@ public class EnemyControlSystem implements IEntityProcessingService {
             LifePart lifePart = enemy.getPart(LifePart.class);
             GunnerPart gunnerPart = enemy.getPart(GunnerPart.class);
 
-            this.time = (this.time + gameData.getDelta()) % 50;
+            Random rand = new Random();
 
-            float controlRotateAmplifier = MathUtils.random(0.5f,2f);
-            float controlGeneralAmplifier = MathUtils.random(0.5f,2f);
+            float rng = rand.nextFloat();
 
-            movingPart.setLeft(
-                    (MathUtils.sin(time * controlRotateAmplifier +
-                            MathUtils.random(0f, 2f)) *
-                            controlGeneralAmplifier) < MathUtils.random(-0.3f, -controlGeneralAmplifier)
-            );
-            movingPart.setRight(
-                    (MathUtils.sin(time * controlRotateAmplifier +
-                            MathUtils.random(0f, 2f)) *
-                            controlGeneralAmplifier) > MathUtils.random(0.8f, controlGeneralAmplifier));
+            if (rng > 0.1f && rng < 0.9f) {
+                movingPart.setUp(true);
+            }
 
-            movingPart.setUp(MathUtils.random(0.01f, 1f) > MathUtils.random(0.5f, 1f));
+            if (rng < 0.2f) {
+                movingPart.setLeft(true);
+            }
+
+            if (rng > 0.8f) {
+                movingPart.setRight(true);
+            }
 
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
             lifePart.process(gameData,enemy);
             gunnerPart.process(gameData,enemy);
 
-            gunnerPart.setWeaponActive(MathUtils.random(0f,0.55f) > 0.49f);
+            gunnerPart.setWeaponActive(true);
 
             //New implementation
             if (gunnerPart.getWeaponActive()==true) {
