@@ -9,12 +9,6 @@
     <artifactId>Core</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <libGDX.version>1.11.0</libGDX.version>
-    </properties>
 
     <repositories>
         <repository>
@@ -25,12 +19,6 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>dk.sdu.mmmi.cbse</groupId>
-            <artifactId>Common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>dk.sdu.mmmi.cbse</groupId>
             <artifactId>Common</artifactId>

@@ -1,6 +1,5 @@
 package dk.sdu.mmmi.perib21.asteroidsystem;
 
-import com.badlogic.gdx.math.MathUtils;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
@@ -10,6 +9,7 @@ import dk.sdu.mmmi.perib21.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.perib21.common.services.IGamePluginService;
 
 import java.awt.*;
+import java.util.Random;
 
 public class AsteroidPlugin implements IGamePluginService {
 
@@ -36,7 +36,7 @@ public class AsteroidPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        for (int i = 0; i < MathUtils.random(5, 10); i++) {
+        for (int i = 0; i < 5; i++) {
             asteroid = createInitialAsteroid(gameData);
             world.addEntity(asteroid);
         }
@@ -49,11 +49,11 @@ public class AsteroidPlugin implements IGamePluginService {
      * @param gameData
      */
     public Entity createInitialAsteroid(GameData gameData) {
-        float x = MathUtils.random(gameData.getDisplayWidth());
-        float y = MathUtils.random(gameData.getDisplayHeight());
-        float radians = MathUtils.random(0, (float) (2 * Math.PI));
+        float x = 200;
+        float y = 200;
+        float radians = 5;
 
-        float startSpeed = MathUtils.random(25f, 75f);
+        float startSpeed = 0;
 
         Entity asteroid = new Asteroid();
         this.setAsteroidRadius(asteroid);
@@ -96,12 +96,12 @@ public class AsteroidPlugin implements IGamePluginService {
 
             float radians = positionPart.getRadians() + split;
 
-            float bx = (float) MathUtils.cos(radians) * asteroid.getRadius();
+            float bx = (float) Math.cos(radians) * asteroid.getRadius();
             float x = bx + positionPart.getX();
-            float by = (float) MathUtils.sin(radians) * asteroid.getRadius();
+            float by = (float) Math.sin(radians) * asteroid.getRadius();
             float y = by + positionPart.getY();
 
-            float startSpeed = MathUtils.random(movingPart.getSpeed(), 75f);
+            float startSpeed = new Random().nextInt(80);
 
             this.buildAsteroid(gameData, splittetAsteroid, x, y, radians, startSpeed);
 
@@ -125,10 +125,9 @@ public class AsteroidPlugin implements IGamePluginService {
     private void buildAsteroid(GameData gameData, Entity asteroid, float x, float y, float radians, float startSpeed) {
         asteroid.setShapeX(new float[this.shapePointCount]);
         asteroid.setShapeY(new float[this.shapePointCount]);
-        asteroid.setColor(this.color);
         asteroid.add(new MovingPart(this.deacceleration, this.acceleration, this.maxSpeed, this.rotationSpeed, startSpeed));
         asteroid.add(new PositionPart(x, y, radians));
-        LifePart lifePart = new LifePart(this.life, 0);
+        LifePart lifePart = new LifePart(this.life, 10000000);
         asteroid.add(lifePart);
         this.setAsteroidRadius(asteroid);
     }

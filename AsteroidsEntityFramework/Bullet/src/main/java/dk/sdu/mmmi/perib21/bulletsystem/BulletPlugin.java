@@ -1,5 +1,5 @@
 package dk.sdu.mmmi.perib21.bulletsystem;
-import com.badlogic.gdx.math.MathUtils;
+import java.util.Random;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
@@ -43,9 +43,9 @@ public class BulletPlugin implements IGamePluginService, IBulletPluginService {
 
         bullet.setRadius(1);
 
-        float bx = (float) MathUtils.cos(radians) * this.gunner.getRadius() * bullet.getRadius();
+        float bx = (float) Math.cos(radians) * this.gunner.getRadius() * bullet.getRadius();
         float x = bx + gunnerPosition.getX();
-        float by = (float) MathUtils.sin(radians) * this.gunner.getRadius() * bullet.getRadius();
+        float by = (float) Math.sin(radians) * this.gunner.getRadius() * bullet.getRadius();
         float y = by + gunnerPosition.getY();
         float shootSpeed = 350 + (gunnerMovement.getSpeed());
 
