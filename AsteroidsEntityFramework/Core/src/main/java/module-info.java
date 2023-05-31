@@ -6,11 +6,15 @@ module Core {
 
     requires Common;
     requires java.desktop;
-    requires ShadedLibGDX;
+    requires com.badlogic.gdx;
+    requires spring.context;
 
     uses IGamePluginService;
     uses IEntityProcessingService;
     uses IPostEntityProcessingService;
+
+    exports dk.sdu.mmmi.perib21.dependencyinjectors;
+    exports dk.sdu.mmmi.perib21.main;
 
 }
 

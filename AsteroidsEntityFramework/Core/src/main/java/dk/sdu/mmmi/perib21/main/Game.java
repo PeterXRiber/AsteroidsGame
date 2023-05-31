@@ -7,22 +7,29 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dk.sdu.mmmi.perib21.common.data.Entity;
 import dk.sdu.mmmi.perib21.common.data.GameData;
 import dk.sdu.mmmi.perib21.common.data.World;
-import dk.sdu.mmmi.perib21.common.services.IEntityProcessingService;
-import dk.sdu.mmmi.perib21.common.services.IGamePluginService;
-import dk.sdu.mmmi.perib21.common.services.IPostEntityProcessingService;
-import dk.sdu.mmmi.perib21.common.SPILocator.SPILocator;
+import dk.sdu.mmmi.perib21.dependencyinjectors.EntityProcessingInjector;
+import dk.sdu.mmmi.perib21.dependencyinjectors.GamePluginInjector;
+import dk.sdu.mmmi.perib21.dependencyinjectors.PostEntityProcessingInjector;
 import dk.sdu.mmmi.perib21.managers.GameInputProcessor;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
-
-import java.util.Collection;
-
-
+@Component("game")
 public class Game implements ApplicationListener {
+
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
     private final GameData gameData = new GameData();
     private World world = new World();
 
+    private AnnotationConfigApplicationContext components;
+
+    // refreshing updates and loads OR it refreshes
+    public Game() {
+        this.components = new AnnotationConfigApplicationContext();
+        this.components.scan("dk.sdu.mmmi.perib21.dependencyinjectors");
+        this.components.refresh();
+    }
 
 
     @Override
@@ -39,10 +46,9 @@ public class Game implements ApplicationListener {
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData)
         );
 
-        // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : getPluginServices()) {
-            iGamePlugin.start(gameData, world);
-        }
+        // Lookup all Game Plugins using dependency injection
+        ((GamePluginInjector) components.getBean("gamePluginInjector")).start(gameData, world);
+
     }
 
     @Override
@@ -63,15 +69,8 @@ public class Game implements ApplicationListener {
 
     private void update() {
         // Update
-        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
-            entityProcessorService.process(gameData, world);
-        }
-
-        for (IPostEntityProcessingService entityPostProcessingService : getPostEntityProcessingServices()) {
-            entityPostProcessingService.process(gameData, world);
-        }
-
-
+        ((EntityProcessingInjector) components.getBean("entityProcessingInjector")).process(gameData, world);
+        //((PostEntityProcessingInjector) components.getBean("postEntityProcessingInjector")).process(gameData, world);
     }
 
     private void draw() {
@@ -111,7 +110,7 @@ public class Game implements ApplicationListener {
     @Override
     public void dispose() {
     }
-
+/*
     private Collection<? extends IGamePluginService> getPluginServices() {
         return SPILocator.locateAll(IGamePluginService.class);
     }
@@ -123,4 +122,6 @@ public class Game implements ApplicationListener {
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
         return SPILocator.locateAll(IPostEntityProcessingService.class);
     }
+
+ */
 }
