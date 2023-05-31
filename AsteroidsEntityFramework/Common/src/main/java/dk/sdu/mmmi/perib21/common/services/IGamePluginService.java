@@ -9,7 +9,7 @@ public interface IGamePluginService {
      * @param gameData
      * @param world
      *
-     *  The plugin is initialized
+     *      The entities of the game is created
      *
      *  Pre-condition: The game is being booted and the plugin has not been called yet.
      *  Post-condition: The plugin has been used and the relevant entities have been added to the game world
